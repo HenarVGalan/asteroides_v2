@@ -1,0 +1,24 @@
+{
+  "name": "aste_rc_v2",
+  "version": "1.0.0",
+  "description": "primera version en heroku Refactoring colisiones v2",
+  "main": "index.js",
+  "dependencies": {
+    "express": "^4.15.5",
+    "socket.io": "^2.0.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HenarVGalan/asteroides_v2.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/HenarVGalan/asteroides_v2/issues"
+  },
+  "homepage": "https://github.com/HenarVGalan/asteroides_v2#readme"
+}
