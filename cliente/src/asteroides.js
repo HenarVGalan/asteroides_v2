@@ -17,6 +17,7 @@ function Juego() {
     game.load.image('bullet', 'cliente/recursos/bullets.png');
     game.load.image('ship', 'cliente/recursos/ship.png');
     game.load.spritesheet('veggies', 'cliente/recursos/fruitnveg32wh37.png', 32, 32);
+    game.load.image('boton_reset', 'cliente/recursos/boton_reset.png');
   }
   this.init = function(data) {
     game.stage.disableVisibilityChange = true;
@@ -167,6 +168,7 @@ function Juego() {
   this.finalizar = function(data) {
     console.log("Ha ganado", data);
     this.fin = true;
+    game.state.start("finalizar",true, false, data, cliente.id);
   }
 
   this.screenWrap = function(sprite) {
@@ -198,7 +200,59 @@ function Juego() {
 
   this.render = function() {}
 }
+function FinJuego(){
+    this.ganador;
+    this.idLocal;
+    this.init =function(id,idLocal) {    
+        //alert("Ganador: "+score)
+        this.ganador=id;
+        this.idLocal=idLocal;
+    };
+    this.create= function(){
+        //var gameOverTitle = game.add.sprite(160,160,"gameover");
+        //gameOverTitle.anchor.setTo(0.5,0.5);
+        game.add.tileSprite(0, 0, game.width, game.height, 'space');
+        var cadena="";
+        
+        if (this.ganador==this.idLocal){
+            cadena="Enhorabuena, ¡ERES EL GANADOR!";
+        }
+        else{
+            cadena="Lo siento, tu rival te ha vencido"
+        }
 
+        var text2 = game.add.text(game.world.centerX, 180, cadena, {
+                font: "25px Arial",
+                fill: "#FDFEFE",
+                align: "center"
+            });
+        text2.anchor.setTo(0.5, 0.5); 
+
+       var text1 = game.add.text(game.world.centerX, 220, "Gracias por usar VeggieRocket", {
+                font: "25px Arial",
+                fill: "#FDFEFE",
+                align: "center"
+            });
+        text1.anchor.setTo(0.5, 0.5);    
+
+       var text1 = game.add.text(game.world.centerX, 250, "FIN DEL JUEGO", {
+                font: "25px Arial",
+                fill: "#FDFEFE",
+                align: "center"
+            });
+        text1.anchor.setTo(0.5, 0.5);    
+
+       /* var text = game.add.bitmapText(400, 300, 'carrier_command', 'FIN JUEGO', 64);
+        text.anchor.x = 0.5;
+        text.anchor.y = 0.5;*/
+
+        var playButton = game.add.button(400,420,"boton_reset",this.volverAJugar,this);
+        playButton.anchor.setTo(0.5,0.5);
+    };
+    this.volverAJugar= function(){
+        cliente.volverAJugar();
+    }
+}
 function Nave(id, x, y, veggie) {
   this.id = id;
   this.puntos = 0;
