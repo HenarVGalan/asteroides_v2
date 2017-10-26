@@ -1,7 +1,7 @@
 var fs=require("fs");
-var config=JSON.parse(fs.readFileSync("config.json"));
-var host=config.host;
-var port=config.port;
+// var config=JSON.parse(fs.readFileSync("config.json"));
+// var host=config.host;
+// var port=config.port;
 var exp=require("express");
 var app=exp(); //el tutorial indicaba exp.createServer()
 var http = require('http').Server(app);
@@ -10,6 +10,7 @@ var io = require('socket.io').listen(http);
 var modelo=require('./server/modelo.js');
 var juego = new modelo.Juego();
 
+app.set('port', (process.env.PORT || 5000));
 
 //app.use(app.router);
 app.use(exp.static(__dirname + '/'));
@@ -20,12 +21,16 @@ app.get("/",function(request,response){ //cuando lanzas una petición al raiz de
     	response.send(contenido);
 });
 
-console.log("Servidor escuchando en "+host+":"+port);
-http.listen(port,host);
+http.listen(app.get('port'), function(){});
+// console.log("Servidor escuchando en "+host+":"+port);
+// http.listen(port,host);
 
 var naves=0;
 
 io.on('connection',function(socket){
+    socket.on('configuracion', function(){
+      juego.iniciar(socket);
+    })
 
     socket.on('nuevoJugador',function(data){
       
@@ -47,6 +52,11 @@ io.on('connection',function(socket){
     socket.on('test',function(){
         console.log('test received');
     });
+
+    socket.on('volverAJugar',function(data){
+      juego.volverAJugar(socket);
+    });
+
 });
 
 function obtenerTodos(){
