@@ -1,15 +1,49 @@
 function Juego(){
+	this.partidas = {};
+	this.nuevaPartida = function (nombre,socket){
+		if (this.partidas[nombre]==null){
+			this.partidas[nombre] = new Partida(nombre);
+		}
+
+		socket.join(nombre);
+	}
+	this.unirme=function(nombre,socket){
+		socket.join(nombre);
+	}
+
+	
+}
+
+function Partida(nombre){
 	this.estado=new Inicial();
 	this.jugadores={};
 	this.veggie=16;
 	this.socket;
 	this.x=200;
-	this.socket;
 	this.coord=[];
-	this.iniciar=function(socket){
+	this.nombre=nombre;
+	this.io;
+
+	this.iniciar=function(socket,io){
 		this.socket=socket;
-		this.socket.emit("coord", this.coord);
+		this.io=io;
+		this.socket.emit('coord',this.coord);
 	}
+	this.reiniciar=function(){
+		this.jugadores={};
+		this.coord=[];
+		this.x=200;
+		this.ini();
+		this.estado=new Inicial();
+		this.io.sockets.in(this.nombre).emit('reset',this.coord);
+		this.socket.broadcast.to(this.nombre).emit('reset',this.coord)
+	}
+
+	this.volverAJugar=function(socket){
+  		this.socket=socket;
+  		this.estado.volverAJugar(this);
+	}
+	
 	this.agregarJugador=function(id,socket){
 		this.socket=socket;
 		this.estado.agregarJugador(id,this);
@@ -26,22 +60,14 @@ function Juego(){
 		}
 
 	}
-	this.reiniciar=function(){
-	  this.jugadores={};
-	  this.coord=[];
-	  this.ini();
-	  this.estado=new Inicial();
-	  this.socket.broadcast.emit('reset',this.coord);
-	  this.socket.emit('reset',this.coord);
-	}
 	
 	this.enviarFaltaUno=function(){
-		this.socket.emit('faltaUno');
+		this.io.sockets.in(this.nombre).emit('faltaUno');
 	}
 
 	this.enviarAJugar=function(){
-		this.socket.broadcast.emit('aJugar',this.jugadores);
-        this.socket.emit('aJugar',this.jugadores);
+		this.io.sockets.in(this.nombre).emit('aJugar',this.jugadores);
+		this.socket.broadcast.to(this.nombre).emit('aJugar',this.jugadores);
 
 	}
 
@@ -51,27 +77,25 @@ function Juego(){
 	}
 
 	this.puedeMover=function(data){
-		if(data.puntos>=10){
+		if(data.puntos>=5){
 			this.enviarFinal(data.id);
 			this.estado=new Final();
-		}else{
+		}
+		
+		else{
 			this.socket.broadcast.emit('movimiento',data); 	
 		}
 	}
-	this.volverAJugar=function(socket){
-  		this.socket=socket;
-  		this.estado.volverAJugar(this);
+
+	this.enviarFinal=function(idGanador){
+		this.io.sockets.in(this.nombre).emit('final',idGanador);
+		this.socket.broadcast.to(this.nombre).emit('final',idGanador);
 	}
 
-
-	this.enviarFinal=function(id){
-		this.socket.broadcast.emit('final',id);
-		this.socket.emit('final',id);
-	}
 	this.ini=function(){
                 this.veggie=randomInt(0,35);
                 var otra=this.veggie+1;
-                //console.log(this.veggie,"--",otra);
+                //console.log(this.veg,"--",otra);
                 for(var i=0;i<20;i++){
                         this.coord.push({'veggie':this.veggie,'x':randomInt(10,770),'y':randomInt(25,570)});
                 }
@@ -87,7 +111,7 @@ function Juego(){
                         this.coord.push({'veggie':alea,'x':randomInt(10,770),'y':randomInt(25,570)});
                 }
         }
-        this.ini();
+    this.ini();
 
 }
 
@@ -111,11 +135,12 @@ function Inicial(){
 
 function Jugar(){
 	this.agregarJugador=function(id,juego){
-		console.log('No se pueden agregar Jugadores');
+		console.log('no se pueden agregar Jugadores');
 	}
 	this.movimiento=function(data,juego){
 		juego.puedeMover(data);
 	}
+
 	this.volverAJugar=function(juego){
   		juego.reiniciar();
 	}
@@ -124,13 +149,14 @@ function Jugar(){
 
 function Final(){
 	this.agregarJugador=function(id,juego){
-		console.log('El juego ha acabado');
+		//console.log('no se pueden agregar Jugadores');
 	}
 	this.movimiento=function(){
 		console.log('No se puede mover la nave');
 	}
+
 	this.volverAJugar=function(juego){
- 		juego.reiniciar();
+  		juego.reiniciar();
 	}
 }
 

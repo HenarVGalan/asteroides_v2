@@ -18,7 +18,7 @@ app.use(exp.static(__dirname + '/'));
 app.get("/",function(request,response){ //cuando lanzas una petición al raiz del web, y en esta función te responde
         var contenido = fs.readFileSync("./cliente/views/index.html");
         response.setHeader("Content-Type", "text/html");
-    	response.send(contenido);
+            response.send(contenido);
 });
 
 http.listen(app.get('port'), function(){});
@@ -28,33 +28,34 @@ http.listen(app.get('port'), function(){});
 var naves=0;
 
 io.on('connection',function(socket){
-    socket.on('configuracion', function(){
-      juego.iniciar(socket);
+    socket.on('room',function(room){
+        console.log('nuevoCliente: ', room);
+        //socket.join(room);
+        juego.nuevaPartida(room, socket);
+    });
+    socket.on('configuracion', function(room){
+      //console.log(juego.partidas);
+      juego.partidas[room].iniciar(socket,io);
     })
-
+    socket.on('unirme',function(room){
+          
+        //console.log(juego.partidas);
+        juego.unirme(room,socket);
+    })
     socket.on('nuevoJugador',function(data){
       
-        juego.agregarJugador(data.id,socket);
+        juego.partidas[data.room].agregarJugador(data.id,socket);
     });
 
-    socket.on('posicion',function(data){
-       // socket.jugador = {
-       //      id: data.id,
-       //      x: data.x,
-       //      y: data.y,
-       //      ang:data.ang
-       //  };
-       //  console.log("movimiento id:",socket.jugador.id," ",socket.jugador.x," ",socket.jugador.y);
-       //  socket.broadcast.emit('movimiento',socket.jugador); 
-       juego.movimiento(data,socket);
+    socket.on('posicion',function(room,data){
+       juego.partidas[room].movimiento(data,socket);
       });
 
     socket.on('test',function(){
         console.log('test received');
     });
-
-    socket.on('volverAJugar',function(data){
-      juego.volverAJugar(socket);
+    socket.on('volverAJugar',function(room){
+        juego.partidas[room].volverAJugar(socket);
     });
 
 });
@@ -72,12 +73,12 @@ function obtenerTodos(){
 
 // io.on('connection', function(socket) { //como el cliente intenta conectarse con el servidor, este le envia un mensaje de bienvenido
 //     socket.on('nuevoJugador',function(){
-//     	naves++;
-//     	socket.emit('crearJugador',{id:naves});
+//             naves++;
+//             socket.emit('crearJugador',{id:naves});
 //     }); //socket.on se queda esperando
 // });
 //http.listen(3000);
 
 function randomInt(low, high){
-	return Math.floor(Math.random() * (high - low) + low);
+        return Math.floor(Math.random() * (high - low) + low);
 }
