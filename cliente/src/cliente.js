@@ -5,7 +5,9 @@ function Cliente(nombre){
 	this.veggie;
 	this.coord;
 	this.room=nombre;
-	
+	this.unirmeAPartida = function(){		
+    	this.socket.emit('unirme',this.room);
+	};
 	this.cargarConfiguracion=function(){
 		this.socket.emit('configuracion',this.room);
 	}

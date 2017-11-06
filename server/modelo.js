@@ -10,7 +10,15 @@ function Juego(){
 	this.unirme=function(nombre,socket){
 		socket.join(nombre);
 	}
-
+	this.obtenerPartidas=function(callback){
+		var lista=[];
+		for (var key in this.partidas) {
+			if(this.partidas[key].estado.esInicial()){
+				lista.push(key);
+			}
+		}
+		callback(lista);
+	}
 	
 }
 
@@ -28,6 +36,7 @@ function Partida(nombre){
 		this.socket=socket;
 		this.io=io;
 		this.socket.emit('coord',this.coord);
+
 	}
 	this.reiniciar=function(){
 		this.jugadores={};
@@ -67,7 +76,8 @@ function Partida(nombre){
 
 	this.enviarAJugar=function(){
 		this.io.sockets.in(this.nombre).emit('aJugar',this.jugadores);
-		this.socket.broadcast.to(this.nombre).emit('aJugar',this.jugadores);
+		//comentamos la siguiente linea para arreglar  el problema de naves duplicadas
+		//this.socket.broadcast.to(this.nombre).emit('aJugar',this.jugadores);
 
 	}
 
@@ -131,6 +141,9 @@ function Inicial(){
 	this.movimiento=function(){
 		console.log('No se puede mover la nave');
 	}
+	this.esInicial =function(){
+			return true;
+		}
 }
 
 function Jugar(){
@@ -144,6 +157,9 @@ function Jugar(){
 	this.volverAJugar=function(juego){
   		juego.reiniciar();
 	}
+	this.esInicial =function(){
+			return false;
+		}
 
 }
 
@@ -158,6 +174,9 @@ function Final(){
 	this.volverAJugar=function(juego){
   		juego.reiniciar();
 	}
+	this.esInicial =function(){
+			return false;
+		}
 }
 
 function randomInt(low, high){

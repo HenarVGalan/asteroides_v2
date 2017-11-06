@@ -3,6 +3,10 @@
     <meta charset="utf-8" />
     <title>Asteroides</title>
     <script src="cliente/lib/phaser.min.js"></script>
+     <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> 
     <script src='https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js'></script>
     <script src="cliente/src/asteroides.js"></script>  
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
@@ -11,11 +15,83 @@
     <script src="cliente/src/ini.js"></script>
 </head>
 <body>
-	<div id = "partida"></div>
+    <div class="container">
+        <h1>Asteroides container</h1>
+             <img src="logo.jpg" class="img-rounded" alt="Cinque Terre"> 
+            <div class="row">
+              <div class="col-sm-8">Columna 1
+                <div id = "espacio" align= "center"></div>
+              </div>
+              <div class="col-sm-4">Columna 2
+                 
+                <div id = "partida"></div>
 
-	<div id = "espacio" align= "center"></div>
+                 <tr>
+                        <td>
+                            <div class="form-group" id="formSel">
+                              
+                              <select class="form-control" id="sel1">
+                              </select>
+                          </div>
+                      </td>
+                      <td>
+                          <button type="button" class="btn btn-primary btn-block" id="unirmeBtn">Unirme a partida</button>
+                    </td>
+                    
+              </div>
+            </div> 
+           
+           
+     </div>
+    <script>
+     mostrarIntroducirPartida();
+     obtenerPartidas();
+     </script>
+	<!-- <div id = "partida"></div> -->
 
-	<script>
-	 mostrarIntroducirPartida();</script>
+	<!-- <div id = "espacio" align= "center"></div> -->
+
+	
+
+<!-- 
+ <div class="container bg1 text-center" id="cnt1">
+        <div id="cabecera"></div>
+    </div>
+    <div class="container bg1 text-center" id="cnt2">
+        <div class="row">
+            <div class="col-sm-3">
+            </div>
+            <div class="col-sm-6">
+                <table class="table">
+                    <tr>
+                        <td>
+                            <div class="form-group" id="formSel">
+                              
+                              <select class="form-control" id="sel1">
+                              </select>
+                          </div>
+                      </td>
+                      <td>
+                          <button type="button" class="btn btn-primary btn-block" id="unirmeBtn">Unirme a partida</button>
+                    </td>
+                </tr>
+                <tr>
+                   <div id="partida"></div>
+                </tr>
+            </table>
+                </div>
+            </div>
+            <div class="col-sm-3">
+            </div>
+        </div>
+    </div>
+    <div class="container bg1" text-center>
+        <div id="espacio" align="center"></div>
+    </div>
+    <script type="text/javascript">
+        nombrePartida();
+        obtenerPartidas();
+    </script> -->
+
 </body>
 </html>

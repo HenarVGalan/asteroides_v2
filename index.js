@@ -10,6 +10,13 @@ var io = require('socket.io').listen(http);
 var modelo=require('./server/modelo.js');
 var juego = new modelo.Juego();
 
+
+app.get('/obtenerPartidas', function(request, response) {
+    juego.obtenerPartidas(function(lista){
+        response.send(lista);        
+    });
+});
+
 app.set('port', (process.env.PORT || 5000));
 
 //app.use(app.router);
@@ -41,7 +48,7 @@ io.on('connection',function(socket){
           
         //console.log(juego.partidas);
         juego.unirme(room,socket);
-    })
+    });
     socket.on('nuevoJugador',function(data){
       
         juego.partidas[data.room].agregarJugador(data.id,socket);
