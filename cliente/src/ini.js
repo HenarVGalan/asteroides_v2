@@ -34,7 +34,7 @@ function obtenerPartidas(){
 function mostrarIntroducirPartida(){
 	var cadena;
 
-	cadena = "<h1>Introducir Partida</h1>";
+	cadena = "";
 	$('#cabecera').append(cadena);
 	cadena = cadena + "<input type='text' id ='nombre'>";
 	cadena = cadena + "<input type = 'submit' id = 'btn' value = 'Enviar'>";
@@ -72,7 +72,7 @@ function mostrarIntroducirPartida(){
 }
 
 function mostrarCanvas(){
-	game = new Phaser.Game(800, 600, Phaser.CANVAS, 'phaser-example');
+	game = new Phaser.Game(800, 600, Phaser.CANVAS, 'espacio');
 
 	juego = new Juego();
 	finJuego = new FinJuego();

@@ -1,10 +1,14 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="utf-8" />
     <title>Asteroides</title>
+    <meta name="viewport" content="zidth=device-width, initial-scale=1">
     <script src="cliente/lib/phaser.min.js"></script>
      <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="cliente/views/portada.css">
+    
     <!-- Latest compiled JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> 
     <script src='https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js'></script>
@@ -14,7 +18,226 @@
     <script src="cliente/src/cliente.js"></script>
     <script src="cliente/src/ini.js"></script>
 </head>
-<body>
+
+    <body  id="myPage" data-spy="scroll" data-target=".navbar" data-offset="50">
+
+           <nav class="navbar navbar-default navbar-fixed-top">
+                  <div class="container-fluid">
+                    <div class="navbar-header">
+                      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>                        
+                      </button>
+                      <a class="navbar-brand" href="#">Logo</a>
+                    </div>
+                    <div class="collapse navbar-collapse" id="myNavbar">
+                      <ul class="nav navbar-nav navbar-right">
+                        <li><a href="#myPage">HOME</a></li>
+                        <li><a href="#juego">JUEGO</a></li>
+                        <li><a href="#sala">SALA</a></li>
+                        <li><a href="#contact">CONTACT</a></li>
+                        <li class="dropdown">
+                          <a class="dropdown-toggle" data-toggle="dropdown" href="#">RESULTADOS
+                          <span class="caret"></span></a>
+                          <ul class="dropdown-menu">
+                            <li><a href="#resultados">SALAS</a></li>
+                            <li><a href="#resultados">PARTIDAS</a></li>
+                          </ul>
+                        </li>
+                        <li><a href="#"><span class="glyphicon glyphicon-search"></span></a></li>
+                      </ul>
+                    </div>
+                  </div>
+            </nav>
+
+            <div id="myCarousel" class="carousel slide" data-ride="carousel">
+                    <!-- Indicators -->
+                    <ol class="carousel-indicators">
+                      <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                      <li data-target="#myCarousel" data-slide-to="1"></li>
+                      <li data-target="#myCarousel" data-slide-to="2"></li>
+                    </ol>
+
+                    <!-- Wrapper for slides -->
+                    <div class="carousel-inner" role="listbox">
+                          <div class="item active">
+                            <img src="cliente/recursos/portada1.jpg" alt="New York" width="1200" height="700">
+                              
+                          </div>
+
+                          <div class="item">
+                            <img src="cliente/recursos/portada2.jpg" alt="Chicago" width="1200" height="700">
+                                
+                          </div>
+                        
+                          <div class="item">
+                            <img src="cliente/recursos/portada3.jpg" alt="Los Angeles" width="1200" height="700">
+                            <div class="carousel-caption">
+                             
+                            </div>      
+                          </div>
+                    </div>
+                    <!-- Left and right controls -->
+                    <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+                      <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                      <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+                      <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                      <span class="sr-only">Next</span>
+                    </a>
+            </div>
+
+            <div id="juego" class="container text-center">
+                      <h3>ASTEROIDES <3 </h3>
+                      <p><em>We love naves!</em></p>
+                      
+                      <br>
+                      <div class="row">
+                        <div class="col-sm-6">
+                          <p class="text-center"><strong>Salas</strong></p><br>
+                          <a href="#demo" data-toggle="collapse">
+                            <img src="cliente/recursos/logo.jpg" class="img-circle person" alt="Random Name" width="255" height="255">
+                          </a>
+                          <div id="demo" class="collapse">
+
+                                    <td>
+                                            <div class="form-group" id="formSel">
+                                              
+                                              <select class="form-control" id="sel1">
+                                              </select>
+                                          </div>
+                                      </td>
+                                      <td>
+                                          <button type="button" class="btn btn-primary btn-block" id="unirmeBtn">Unirme a partida</button>
+                                      </td>                        
+                          </div>
+                        </div>
+                        <div class="col-sm-6">
+                          <p class="text-center"><strong>Crear Sala</strong></p><br>
+                          <a href="#demo2" data-toggle="collapse">
+                            <img src="cliente/recursos/añadir.jpg" class="img-circle person" alt="Random Name" width="255" height="255">
+                          </a>
+                          <div id="demo2" class="collapse">
+                                <div id = "partida"></div>
+                                                              
+                              
+                          </div>
+                        </div>
+                      <!--   <div class="col-sm-4">
+                          <p class="text-center"><strong>Partida</strong></p><br>
+                          <a href="#demo3" data-toggle="collapse">
+                            <img src="bandmember.jpg" class="img-circle person" alt="Random Name" width="255" height="255">
+                          </a>
+                          <div id="demo3" class="collapse">
+                           <div id = "espacio" align= "center"></div>
+                          </div>
+                        </div> -->
+                      </div>
+            </div>
+            <div id="sala" class="bg-1">
+                  <div class="container">
+                    <h3 class="text-center">Sala</h3>
+                    <p class="text-center">Partida que se está jugando actualmente</p>
+
+                    <div id = "espacio" align= "center"></div>
+
+                  </div>
+            </div>
+
+
+            <!-- Container (Contact Section) -->
+            <div  id="contact" class="container">
+
+              <h3 class="text-center">Contact</h3>
+              <p class="text-center"><em>We love our Asteroides!</em></p>
+
+              <div class="row">
+                <div class="text-center">
+                  <p><span class="glyphicon glyphicon-map-marker"></span>Albacete, ES</p>
+                  <p><span class="glyphicon glyphicon-envelope"></span>Email: henar.velasco1@alu.uclm.es</p>
+                </div>
+              </div>
+              <br>
+
+              <h3 id="resultados" class="text-center">Resultado de las Partidas</h3>  
+              <p class="text-center"><em> SALA : </em></p>
+              <ul class="nav nav-tabs">
+                <li class="active"><a data-toggle="tab" href="#uno">Partida 1</a></li>
+                <li><a data-toggle="tab" href="#dos">Partida 2</a></li>
+                <li><a data-toggle="tab" href="#tres">Partida 3</a></li>
+              </ul>
+
+              <div class="tab-content">
+                <div id="uno" class="tab-pane fade in active">
+                  <h2>Ganador : </h2>
+                  <p>Man, we've been on the road for some time now. Looking forward to lorem ipsum.</p>
+                </div>
+                <div id="dos" class="tab-pane fade">
+                  <h2>Ganador :</h2>
+                  <p>Always a pleasure people! Hope you enjoyed it as much as I did. Could I BE.. any more pleased?</p>
+                </div>
+                <div id="tres" class="tab-pane fade">
+                  <h2>Ganador :</h2>
+                  <p>I mean, sometimes I enjoy the show, but other times I enjoy other things.</p>
+                </div>
+              </div>
+            </div>
+
+
+            <footer class="text-center">
+                  <a class="up-arrow" href="#myPage" data-toggle="tooltip" title="TO TOP">
+                    <span class="glyphicon glyphicon-chevron-up"></span>
+                  </a><br><br>
+                  <p>Bootstrap Theme Made By <a href="https://www.w3schools.com" data-toggle="tooltip" title="Visit w3schools">www.w3schools.com</a></p>
+            </footer>
+
+
+        <script>
+            mostrarIntroducirPartida();
+            obtenerPartidas();
+           /* nombrePartida();*/
+      
+
+            $(document).ready(function(){
+                // Initialize Tooltip
+                $('[data-toggle="tooltip"]').tooltip();
+            })
+
+
+
+            $(document).ready(function(){
+              // Add smooth scrolling to all links in navbar + footer link
+              $(".navbar a, footer a[href='#myPage']").on('click', function(event) {
+
+              // Make sure this.hash has a value before overriding default behavior
+              if (this.hash !== "") {
+
+                // Prevent default anchor click behavior
+                event.preventDefault();
+
+                // Store hash
+                var hash = this.hash;
+
+                // Using jQuery's animate() method to add smooth page scroll
+                // The optional number (900) specifies the number of milliseconds it takes to scroll to the specified area
+                $('html, body').animate({
+                  scrollTop: $(hash).offset().top
+                }, 900, function(){
+
+                  // Add hash (#) to URL when done scrolling (default click behavior)
+                  window.location.hash = hash;
+                  });
+                } // End if
+              });
+            })
+        </script>
+    </body>
+
+</html>
+
+<!-- <body>
     <div class="container">
         <h1>Asteroides container</h1>
              <img src="logo.jpg" class="img-rounded" alt="Cinque Terre"> 
@@ -46,7 +269,7 @@
     <script>
      mostrarIntroducirPartida();
      obtenerPartidas();
-     </script>
+     </script> -->
 	<!-- <div id = "partida"></div> -->
 
 	<!-- <div id = "espacio" align= "center"></div> -->
@@ -93,5 +316,5 @@
         obtenerPartidas();
     </script> -->
 
-</body>
-</html>
+<!-- </body>
+</html> -->
