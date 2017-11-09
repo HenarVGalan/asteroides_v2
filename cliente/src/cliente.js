@@ -69,12 +69,12 @@ function Cliente(nombre){
   			juego.volverAJugar(data);
 		});
 
-		this.socket.on('todos',function(data){
+		/*this.socket.on('todos',function(data){
 			console.log(data);
 		    for(var i = 0; i < data.length; i++){
 		        juego.agregarJugador(data[i].id,data[i].x,data[i].y);
 		    }
-		});
+		});*/
 
 		this.socket.on('movimiento',function(data){ 
 		    juego.moverNave(data); 
