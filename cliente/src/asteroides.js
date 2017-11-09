@@ -126,7 +126,7 @@ function Juego(){
 
 
                 this.screenWrap(nave.sprite);
-                this.actualizarMarcador();
+                //this.actualizarMarcador();
                 //this.bullets.forEachExists(this.screenWrap, this);     
                 nave.bullets.forEachExists(this.screenWrap, this);    
             }
@@ -202,6 +202,7 @@ function Juego(){
             console.log("ñam ñam");
             this.naveLocal.puntos++;
             veggie.kill();
+            this.actualizarMarcador();
         }
     }
     this.processHandler=function(player, veggie) {

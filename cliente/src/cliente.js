@@ -9,7 +9,7 @@ function Cliente(nombre){
     	this.socket.emit('unirme',this.room);
 	};
 	this.cargarConfiguracion=function(){
-		this.socket.emit('configuracion',this.room);
+		this.socket.emit(' ',this.room);
 	}
 
 	this.nuevoJugador=function(){
