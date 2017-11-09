@@ -35,9 +35,19 @@ function mostrarIntroducirPartida(){
 	var cadena;
 
 	cadena = "";
-	$('#cabecera').append(cadena);
-	cadena = cadena + "<input type='text' id ='nombre'>";
-	cadena = cadena + "<input type = 'submit' id = 'btn' value = 'Enviar'>";
+	/*$('#cabecera').append(cadena);*/
+
+	//cadena = cadena + "<form class='form-control'>";
+	
+	cadena = cadena + "<input class='form-control' id ='nombre' type='text'>";
+	
+	
+	cadena = cadena + "<input class='btn btn-primary btn-block'  id = 'btn' value = 'Enviar' type = 'button' >";
+
+/*
+	cadena = cadena + "</td>";*/
+	/*cadena = cadena + "</form>";*/
+
 
 /*	cadena = cadena + " <form class='form-horizontal'>";
 	cadena = cadena + "		<div class='form-group'>";
